@@ -3,19 +3,10 @@ import "./style.css";
 import { getMostCollected, getMostWanted } from "../../utils/API";
 import GameCard from "../../components/GameCard";
 
-const Home = () => {
+const Home = (props) => {
   const [mostWanted, setMostWanted] = useState([]);
   const [mostCollected, setMostCollected] = useState([]);
-  useEffect(() => {
-    getMostWanted()
-      .then((data) => {
-        console.log(data);
-        setMostWanted(data);
-      })
-      .catch((err) => {
-        console.log("oh no!");
-        console.log(err);
-      });
+  const updateCollection = () => {
     getMostCollected()
       .then((data) => {
         console.log(data);
@@ -25,6 +16,21 @@ const Home = () => {
         console.log("oh no!");
         console.log(err);
       });
+  };
+  const updateMostWanted = () => {
+    getMostWanted()
+      .then((data) => {
+        console.log(data);
+        setMostWanted(data);
+      })
+      .catch((err) => {
+        console.log("oh no!");
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    updateCollection();
+    updateMostWanted();
   }, []);
   return (
     <div className="Home">
@@ -33,10 +39,25 @@ const Home = () => {
         <div className="most-wanted-cards">
           {mostWanted.map((game) => (
             <GameCard
+              isWished={
+                props.user.Wishlists.find((wish) => wish.GameId === game.id)
+                  ? true
+                  : false
+              }
+              isCollected={
+                props.user.Collections.find(
+                  (collection) => collection.GameId === game.id
+                )
+                  ? true
+                  : false
+              }
               key={game.id}
               title={game.title}
               description={game.description}
               img={game.img}
+              isLoggedIn={props.isLoggedIn}
+              token={props.token}
+              id={game.id}
             />
           ))}
         </div>
@@ -46,10 +67,25 @@ const Home = () => {
         <div className="most-collected-cards">
           {mostCollected.map((game) => (
             <GameCard
+              isWished={
+                props.user.Wishlists.find((wish) => wish.GameId === game.id)
+                  ? true
+                  : false
+              }
+              isCollected={
+                props.user.Collections.find(
+                  (collection) => collection.GameId === game.id
+                )
+                  ? true
+                  : false
+              }
               key={game.id}
               title={game.title}
               description={game.description}
               img={game.img}
+              isLoggedIn={props.isLoggedIn}
+              token={props.token}
+              id={game.id}
             />
           ))}
         </div>

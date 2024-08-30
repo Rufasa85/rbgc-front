@@ -1,3 +1,10 @@
 .GameCard {
   background-color: yellow;
 }
+
+.GameCard .add-button {
+  background-color: lightgreen;
+}
+.GameCard .remove-button {
+  background-color: coral;
+}

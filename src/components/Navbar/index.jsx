@@ -2,16 +2,19 @@ import { Link } from "react-router-dom";
 import React from "react";
 import "./style.css";
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <div className="Navbar">
       <Link to="/">Home</Link>
       <Link to="/games">All Games</Link>
-      {/* TODO: only display if not logged in */}
-      <Link to="/login">Login/Signup</Link>
-      {/* TODO: only display if logged in */}
-      <Link to="/user/1">Profile</Link>
-      <button>Logout</button>
+      {props.isLoggedIn ? (
+        <>
+          <Link to={`/user/${props.user.id}`}>Profile</Link>
+          <button onClick={props.logout}>Logout</button>
+        </>
+      ) : (
+        <Link to="/login">Login/Signup</Link>
+      )}
     </div>
   );
 };
