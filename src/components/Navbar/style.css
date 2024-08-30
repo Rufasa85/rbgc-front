@@ -1,0 +1,6 @@
+.Navbar {
+  background-color: aqua;
+  font-size: 2em;
+  display: flex;
+  justify-content: space-between;
+}
